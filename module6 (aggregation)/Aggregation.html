@@ -1,0 +1,1085 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Aggregation</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5d46370c-1fc5-4e2a-81d1-d88aa7958451" class="page sans"><header><h1 class="page-title">Aggregation</h1><p class="page-description"></p></header><div class="page-body"><p id="6451aa2e-db2c-4006-a13f-1d70f61883a6" class="">
+</p><p id="9d0894d8-e4b5-4ccf-ba34-1559bacfb36c" class="">লার্জ স্কেলের ডাটা ম্যানেজ করার জন্য <strong>Aggregration</strong> ব্যবহার করা হয়।  <strong>Aggregration</strong> স্টেজ  পাইপ লাইন ব্যবহার করে কাজ করে. প্রতিটা স্টেজ হচ্ছে একটি করে পাইপলাইন যার মধ্যে আলাদা আলাদা ভাবে কন্ডিশন ব্যবহার করা যায়. আমরা চাইলে একাধিক <strong>$match </strong>অপারেটর ব্যবহার করতে পারি কিন্তু যত বেশি স্টেজ ব্যবহার করা হবে তত  বেশি প্রসেসিং টাইম নেবে.</p><p id="ee12f221-03e1-455a-8708-cdf7a081dfe2" class="">প্রথম স্টেজে <strong>$match</strong> ব্যবহার করে কন্ডিশনের উপরে ভিত্তি করে ডাটা নিয়ে আসা</p><p id="5e865de0-ec38-4efb-8a37-178cba4cb8c5" class="">এই ডাটার মধ্যে যদি কোন মডিফাই করার প্রয়োজন পড়ে যা <strong>অরজিনাল ডাটাকে মডিফাই করবে না</strong> শুধুমাত্র আউটপুট ডাটাকে মডিফাই করে একটা রেজাল্ট প্রদান করবে, তাহলে <strong>$addFields</strong> ইউজ করতে পারি এবং পরবর্তী স্টেজে যদি আমরা সেই রেজাল্টকে অরজিনাল ডকুমেন্টে কোন পরিবর্তন না করে আলাদা একটি <strong>কালেকশনে </strong>পুশ করতে চাই তাহলে <strong>$out </strong>ইউজ করব</p><p id="b75e30de-6089-4a05-bca3-c20d90ef56c1" class="">আর যদি অরজিনাল ডকুমেন্ট কে মডিফাই করতে চাই তাহলে <strong>$merge</strong> করব</p><p id="c86a213a-30f9-4ba9-8e9a-d13ed6151e97" class="">সামারি হচ্ছে এপ্লিকেশনে </p><p id="58787a53-439c-4c29-9629-07a49a4d98b4" class=""><strong>$match</strong></p><p id="46441f6f-b146-4f0b-b868-4ced5c334ccd" class="">সাহায্যে ডাটা ফিল্টার করে পরবর্তী স্টেজ ডাটা পাঠানো হয় এবং সেখানে</p><p id="af5e8bea-eecc-4f99-be95-ac3e8490990b" class=""><strong>$addfields</strong></p><p id="4774f534-de11-4055-a621-1b34bb770d14" class="">ব্যবহার করে পাইপ লাইনের ডকুমেন্ট কে মডিফাই করা হয় যা  অরিজিনাল ডাটায় কোন প্রভাব পড়বে না</p><p id="dbb2ed73-4b40-4e5b-953f-04172c77ab2b" class="">
+</p><p id="93b23448-04d7-4ba2-b9d7-1616a148ea1d" class=""><strong>Example: </strong></p><pre id="7dcaa297-a61d-488a-8a2e-10ff4a8043cc" class="code"><code>db.data.aggregate([
+    // stage-1
+    { $match: { gender: &quot;Male&quot; } },
+    // stage-2 -- insert extra fields without modify original field
+    { $addFields: { year: 2023,  course: { name: &quot;Next level&quot;, batch: 2 } } },
+    //stage-3
+    { $project: { gender: 1, course: 1, year: 1 } }, 
+    // stage-4
+    { $out: &quot;output-collection&quot; },
+    // stage-5 -- It modify original data
+    // { $merge: &quot;data&quot; }
+])</code></pre><p id="5a9fde8a-d7ac-4c0b-b388-4eb09ef2e40f" class="">
+</p><ul id="f59f7fb0-1f65-4f8a-a394-d0acee468ddd" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong>$group</strong></strong></strong></strong></strong></summary><p id="9ac059c0-60a1-4bf0-91ee-8a2cea4d3116" class=""><strong>Source: </strong></p><figure id="fd697f46-67cc-487d-9527-f5376ee82347"><a href="https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-group" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">MongoDB Aggregation: tutorial with examples and exercises | Studio 3T</div><div class="bookmark-description">Master the MongoDB aggregation pipeline. Follow along with query examples using the most important aggregation stages, and test your skills!</div></div><div class="bookmark-href"><img src="https://studio3t.com/apple-touch-icon.png?v=3eBmpN7O3k" class="icon bookmark-icon"/>https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-group</div></div><img src="https://studio3t.com/wp-content/uploads/2018/10/Mongodb.png" class="bookmark-image"/></a></figure><p id="8de7c561-b79b-4773-81ce-78dd2bcd7de4" class="">
+</p><p id="d44a3498-95c0-4048-a0da-6611c16b1fe7" class=""><strong>$group</strong> ব্যবহার করা হয় একই ক্যাটাগরির ডাটা কে আলাদাভাবে ক্যাটাগরির আন্ডারে গ্রুপ করে রাখার জন্য.</p><p id="0dcda9ce-2820-4c86-b9c3-fcdaf8d2d824" class="">যেমন ১০০ ইউজারের মধ্যে  পুরুষ এবং নারী দুইটা গ্রুপ তৈরি করা যায়. আবার স্টুডেন্ট হলে ক্লাস ভিত্তিক গ্রুপ করা যায় আবার একই ক্লাসের মধ্যে সেকশন হিসেবে গ্রুপ করা যায়.</p><p id="603d7ee3-f435-4ed6-9af9-4889cc98e2b7" class="">
+</p><p id="cd192308-2929-4a2d-a106-f81fd4de3b12" class="">গ্রুপ করার জন্য দরকার একটি <strong>প্রাইমারি কি</strong> যার উপর ভিত্তি করে গ্রুপ করা হবে, তাকে <strong>_id: </strong>দ্বারা প্রকাশ করা হয় exampel: <strong>_id: “$address.country”</strong></p><p id="8d8aa1c3-66a3-49cf-a3f7-0a459fe84fac" class="">প্রতি গ্রুপে কতগুলো করে ডকুমেন্ট আছে সেটি কাউন্ট করার জন্য <strong>count: { $sum: 1 }</strong></p><p id="77d2a95d-fabe-4dac-9d45-2bc584b7b5e1" class="">ব্যবহার করা হয়. NT: এখানে আমরা count, max, min, avg, sum, push ব্যবহার করতে পারি</p><p id="d239acf1-bc09-415e-aae0-edfa27f254d3" class="">
+</p><ul id="bcba10e3-1f25-4812-8eb2-69c2ce4724a6" class="bulleted-list"><li style="list-style-type:disc">চাইলে গ্রুপকৃত ডকুমেন্ট গুলোর সবগুলো ফিল্ড পাঠানো যায় এর জন্য <strong>fullDoc: { $push: “$$ROOT” } </strong>ব্যবহার করতে হয়.</li></ul><ul id="e6f265b2-ca45-4e26-afc7-d10249daa5cc" class="toggle"><li><details open=""><summary><strong>Example:</strong></summary><pre id="392b821c-9ab3-43e8-829f-9281dd2a37e0" class="code"><code>db.data.aggregate([
+    // stage-1
+    {
+        $group: {
+            _id: &quot;$gender&quot;,
+            count: { $sum: 1 },
+            fullDocs: { $push: &quot;$$ROOT&quot; }
+        }
+    }
+])</code></pre></details></li></ul><p id="11671384-e815-4f41-b8db-12a4d6c1e6c3" class="">
+</p><ul id="982dc371-c8d2-470a-9ad3-e36105878ed5" class="bulleted-list"><li style="list-style-type:disc">আমরা যদি সবগুলো ফিল্ড না পাঠিয়ে স্পেসিফিক কতগুলো ফিল্ড পাঠাতে চাই তাহলে আরেকটি স্টেজ নিয়ে রেজাল্টের উপরে <strong>$project </strong>করে ফিল্ড সিলেক্ট করে দিতে পারি.</li></ul><ul id="08a9b1bf-1ec2-4613-9de9-5cafa6ce12c1" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong>Example:</strong></strong></strong></strong></strong></strong></strong></strong></summary><pre id="0f7438fe-fa92-4ee3-a842-3ec35249800f" class="code"><code>db.data.aggregate([
+    // stage-1
+    {
+        $group: {
+            _id: &quot;$gender&quot;,
+            count: { $sum: 1 },
+            fullDocs: { $push: &quot;$$ROOT&quot; }
+        }
+    },
+    // stage-2
+    {
+        $project: {
+            &quot;fullDocs.gender&quot;: 1,
+            &quot;fullDocs.phone&quot;: 1
+        }
+    }
+])</code></pre></details></li></ul><ul id="3fdd7e00-57ab-43bc-99cb-ed0cb47d1124" class="toggle"><li><details open=""><summary><strong>Output:</strong></summary><pre id="a852f909-ef4b-47e0-ba36-9a21c56bf95d" class="code"><code>/* 1 */
+{
+	&quot;_id&quot; : &quot;Genderfluid&quot;,
+	&quot;fullDocs&quot; : [
+		{
+			&quot;phone&quot; : &quot;(914) 6646925&quot;,
+			&quot;gender&quot; : &quot;Genderfluid&quot;
+		},
+		{
+			&quot;phone&quot; : &quot;(990) 4889800&quot;,
+			&quot;gender&quot; : &quot;Genderfluid&quot;
+		},
+		{
+			&quot;phone&quot; : &quot;(665) 6905129&quot;,
+			&quot;gender&quot; : &quot;Genderfluid&quot;
+		},
+		{
+			&quot;phone&quot; : &quot;(388) 9242545&quot;,
+			&quot;gender&quot; : &quot;Genderfluid&quot;
+		}
+	]
+},</code></pre></details></li></ul><p id="5dfa9906-8575-4235-acdd-9535af7fc9f6" class="">
+</p><ul id="6d97afc3-7a34-4737-bf96-41fe94c45eb1" class="bulleted-list"><li style="list-style-type:disc">আর যদি কোন স্পেসিফিক একটি ফিল্ড প্রোভাইড করতে চাই তাহলে শুধুমাত্র  <strong>name: { $push: “$name” }</strong> বসালে হবে.</li></ul><ul id="07f809ad-e8e0-4c40-b370-37b4dc349883" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong>Example:</strong></strong></strong></strong></strong></strong></strong></strong></summary><pre id="a9ebc40e-a86e-40f2-9788-bad4efcdd767" class="code"><code>db.data.aggregate([
+    // stage-1
+    {
+        $group: {
+            _id: &quot;$gender&quot;,
+            count: { $sum: 1 },
+            genderGroups: { $push: &quot;$gender&quot; }
+        }
+    }
+])</code></pre></details></li></ul><ul id="51d83dfc-cb9f-41ef-b7af-23c6d7c3543f" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong>Output</strong></strong></strong></strong></strong></strong></summary><pre id="2c31bbbe-79a8-4677-9977-802b205c58bf" class="code"><code>/* 1 */
+{
+	&quot;_id&quot; : &quot;Female&quot;,
+	&quot;count&quot; : 52,
+	&quot;genderGroups&quot; : [&quot;Female&quot;,&quot;Female&quot;,............&quot;Female&quot;,]},
+/* 2 */
+{
+	&quot;_id&quot; : &quot;Male&quot;,
+	&quot;count&quot; : 38,
+	&quot;genderGroups&quot; : [&quot;Male&quot;,&quot;Male&quot;,...........&quot;Male&quot;,]},
+/* 3 */
+{
+	&quot;_id&quot; : &quot;Non-binary&quot;,
+	&quot;count&quot; : 1,
+	&quot;genderGroups&quot; : [ &quot;Non-binary&quot; ]
+},
+
+/* 4 */
+{
+	&quot;_id&quot; : &quot;Genderfluid&quot;,
+	&quot;count&quot; : 4,
+	&quot;genderGroups&quot; : [ &quot;Genderfluid&quot;, &quot;Genderfluid&quot;, &quot;Genderfluid&quot;, &quot;Genderfluid&quot; ]
+},</code></pre></details></li></ul><p id="57f23248-c754-4410-91d8-ce43801f2578" class="">
+</p></details></li></ul><ul id="5013984e-2e95-47c4-a6fc-48403c297da9" class="toggle"><li><details open=""><summary><strong>accumulator operator -</strong> (<strong>count, max, min, avg, sum, push) </strong>এর ব্যবহার</summary><p id="61ada4ed-aa7e-41ac-9c30-da234b20d084" class="">Source: </p><figure id="96bfe704-0f23-4aba-beda-221d8d78c87a"><a href="https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-group" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">MongoDB Aggregation: tutorial with examples and exercises | Studio 3T</div><div class="bookmark-description">Master the MongoDB aggregation pipeline. Follow along with query examples using the most important aggregation stages, and test your skills!</div></div><div class="bookmark-href"><img src="https://studio3t.com/apple-touch-icon.png?v=3eBmpN7O3k" class="icon bookmark-icon"/>https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-group</div></div><img src="https://studio3t.com/wp-content/uploads/2018/10/Mongodb.png" class="bookmark-image"/></a></figure><p id="7f6be5db-09e3-4aa3-95ed-39d0711efcf3" class="">
+</p><p id="d98e60e9-8441-4a1b-b483-8fae662c1fb3" class="">টোটাল সব ডকুমেন্টের মধ্য থেকে যদি (count, max, min, avg, sum, push) বের করতে চাই তাহলে, আমাদেরকে সবগুলো ডকুমেন্টকে একটি গ্রুপের আন্ডারে নিয়ে আসতে হবে. </p><p id="d5e8abf2-9471-420d-af10-8c5691153021" class="">এর জন্য আমরা <strong>_id </strong>হিসেবে <strong>null </strong>ইউজ করব তাহলে, <strong>null</strong>গ্রুপের আন্ডারে সবগুলো ডকুমেন্ট চলে আসবে এরপর আমরা (count, max, min, avg, sum, push) এগুলো ব্যবহার করতে পারব.</p><p id="c272c6c7-8deb-4d3e-8d94-0ca74e069473" class="">
+</p><p id="05909fea-76f7-4909-9c56-90f115e849d9" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="ed5c485d-9da8-4ee0-aa48-b676d42336c2" class="code"><code>// Input
+db.data.aggregate([
+    // stage-1
+    {
+        $group: { 
+            _id: &quot;null&quot;,
+            totalSalary: { $sum: &quot;$salary&quot; },
+            averageSalary: { $avg: &quot;$salary&quot; },
+            maxSalary: { $max: &quot;$salary&quot; },
+            minSalary: { $min: &quot;$salary&quot; },
+        }
+    }
+])</code></pre><pre id="30dfec71-8577-4da4-b804-3e720cc40d52" class="code"><code>// Output
+{
+	&quot;_id&quot; : &quot;null&quot;,
+	&quot;totalSalary&quot; : 54037,
+	&quot;averageSalary&quot; : 545.8282828282828,
+	&quot;maxSalary&quot; : 24000,
+	&quot;minSalary&quot; : 105
+}</code></pre><p id="4c5f7994-0aed-4936-860e-3f688d1c9177" class="">
+</p><p id="3361b8d6-8e97-47d4-8fe5-8d2bb1b17c0d" class="">For specific. </p><ul id="728030cd-2c70-491e-8c0a-ec911d30ebba" class="toggle"><li><details open=""><summary><strong>$sum</strong></summary><pre id="b6dda3a1-bcda-406a-93ef-90d5522e02e3" class="code"><code>// input
+db.data.aggregate([
+    // stage-1
+    {
+        $group: { _id: &quot;null&quot;, totalSalary: { $sum: &quot;$salary&quot; } }
+    }
+])</code></pre><pre id="721407b9-ccd1-4751-bcf1-6d8d460e854d" class="code"><code>// Output
+{
+	&quot;_id&quot; : &quot;null&quot;,
+	&quot;totalSalary&quot; : 54037
+}</code></pre><p id="8831e834-d81f-4597-9305-034071882f55" class="">
+</p></details></li></ul><ul id="3becfc79-256f-45d7-bd09-ba0b96314f63" class="toggle"><li><details open=""><summary><strong><strong><strong><strong>$avg</strong></strong></strong></strong></summary><pre id="fdb57617-6bb7-46f1-b2b0-e270d5ee6fdb" class="code"><code>// Input
+db.data.aggregate([
+    // stage-1
+    {
+        $group: { _id: &quot;null&quot;, averageSalary: { $avg: &quot;$salary&quot; } }
+    }
+])</code></pre><pre id="0fc2126c-6a86-4fb0-a28c-cdc91287cd5d" class="code"><code>// Output
+{
+	&quot;_id&quot; : &quot;null&quot;,
+	&quot;averageSalary&quot; : 545.8282828282828
+}</code></pre></details></li></ul><p id="c5082eb5-7b40-42a9-bd33-2d4038f54d14" class=""><mark class="highlight-red"><strong>Same as other operations.</strong></mark></p><p id="c925feed-4391-426e-840e-5d0494bcd8d4" class="">
+</p></details></li></ul><ul id="2e8f2165-33d7-4645-b7d3-7538d1ea6b52" class="toggle"><li><details open=""><summary><strong>$project</strong></summary><p id="8c2ccac5-eb22-483b-bc4c-636712e46af6" class="">প্রজেক্ট স্টেজে শুধুমাত্র ফিল্ড ফিল্টারিং ছাড়াও ফিল্ডের নাম <strong>Rename</strong> করতে পারে এবং এক্সট্রা  ফাংশনাল কাজ করতে পারে. like calculation</p><p id="c5b1f1d8-26ef-4346-920d-fe6373562813" class=""><strong><strong><strong><strong><strong><strong><strong><strong>Example:</strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="8474f4cd-3763-47e7-b1f5-4823c584290b" class="code"><code>// Input
+db.data.aggregate([
+    // stage-1
+    {
+        $group: {
+            _id: &quot;null&quot;,
+            totalSalary: { $sum: &quot;$salary&quot; },
+            averageSalary: { $avg: &quot;$salary&quot; },
+            maxSalary: { $max: &quot;$salary&quot; },
+            minSalary: { $min: &quot;$salary&quot; },
+        }
+    },
+    // stage-2
+    {
+        $project: {
+            totalSalary: 1,
+            maxSalary: 1,
+            minSalary: 1,
+            averageSalary: &quot;$avgSalary&quot;,
+            rangeBetweenManMin: { $subtract: [&quot;$maxSalary&quot;, &quot;$minSalary&quot;] }
+        }
+    }
+])</code></pre><p id="ab009397-585b-4dea-b819-5eaff3dba0f2" class=""><strong><strong><strong><strong><strong><strong><strong>Output:</strong></strong></strong></strong></strong></strong></strong></p><pre id="9d84e345-f57a-4000-b8f8-013bcc95abb8" class="code"><code>{
+	&quot;_id&quot; : &quot;null&quot;,
+	&quot;totalSalary&quot; : 54037,
+	&quot;maxSalary&quot; : 24000,
+	&quot;minSalary&quot; : 105,
+	&quot;rangeBetweenManMin&quot; : 23895
+}</code></pre></details></li></ul><ul id="92558d4e-39fa-4328-baac-a84401c56e16" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong>$unwind </strong></strong></strong></strong></strong></strong>(এরে ফিল্ডের ওপর গ্রুপ)</summary><p id="74d9107a-c639-4bf6-8164-24ad958bee96" class="">Source: </p><figure id="13b49004-abab-40bb-a2df-e1a8cbeb4cc3"><a href="https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-unwind" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">MongoDB Aggregation: tutorial with examples and exercises | Studio 3T</div><div class="bookmark-description">Master the MongoDB aggregation pipeline. Follow along with query examples using the most important aggregation stages, and test your skills!</div></div><div class="bookmark-href"><img src="https://studio3t.com/apple-touch-icon.png?v=3eBmpN7O3k" class="icon bookmark-icon"/>https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-unwind</div></div><img src="https://studio3t.com/wp-content/uploads/2018/10/Mongodb.png" class="bookmark-image"/></a></figure><p id="7e60c85c-1a64-4215-9297-37525d938874" class="">
+</p><p id="20ad7d84-e9ad-4f60-aaa4-19da83af7947" class="">গ্রুপ ব্যবহার করে শুধুমাত্র যেকোনো একটা ফিল্ডের উপর ভিত্তি করে গ্রুপ করা যায়. যদি ওই ফিল্ডটি <strong>Array </strong>হয় তখন সেটাকে গ্রুপ করা যায় না. এর জন্য <strong>$unwind </strong>ইউজ করতে হয়.</p><p id="8ff01338-6e0f-414e-881a-0fd6746aa247" class="">
+</p><p id="46159e58-d3ab-4d6b-a59e-c5f9a3e23e63" class=""><strong>$unwind</strong> প্রথমে প্রত্যেকটা ডিফারেন্ট <strong>Array</strong> এর ডাটা কে আলাদা করে গ্রুপ তৈরি করে, ধরা যাক একটি ফিল্ডের array তে পাঁচটি  ডিফারেন্ট বেলু আছে <strong>$unwind</strong> করলে পাঁচটি ডিফারেন্ট বেল এর জন্য পাঁচটি ডিফারেন্ট গ্রুপ তৈরি হবে এবং প্রতিটি গ্রুপ Main ফিল্ডের আইডিকে রেফার করবে. এখন চাইলে এই আলাদা ডিফারেন্ট গ্রুপগুলোকে নিয়ে <strong>$group</strong> এপ্লাই করা যাবে তাহলে.</p><p id="0ae761d7-00c0-4b0b-857e-8ac181380743" class="">
+</p><p id="b8d268cf-98a6-49d1-90a7-0d0291a1111b" class="">প্রথম স্টেজে ডাটা কে <strong>$unwind </strong>করে সেকেন্ড স্টেজে সে আনওয়াইন্ড ডাটা গুলোকে <strong>$group </strong>করবে.</p><p id="db5ed53b-8333-424a-bd10-01b76378b4d6" class="">
+</p><p id="cc69dc9c-b2f7-4b0c-99cf-4dfca3274055" class=""><strong><strong><strong><strong><strong>Data format:</strong></strong></strong></strong></strong></p><pre id="866e2341-2303-4b2e-b8a9-714fd8344142" class="code"><code>&quot;interests&quot; : [ &quot;Gaming&quot;, &quot;Writing&quot;, &quot;Reading&quot; ],
+&quot;interests&quot; : [ &quot;Gardening&quot;, &quot;Travelling&quot;, &quot;Writing&quot; ],</code></pre><p id="48ae44e3-729a-4711-930e-7db320ae16b3" class=""><strong>$unwind: </strong></p><pre id="0f981646-5b56-4d40-8c4c-a7af27e0919b" class="code"><code>db.data.aggregate([
+    // stage-1
+    {
+        $unwind: &quot;$interests&quot;
+    }
+])</code></pre><p id="766c0061-2be2-46de-b15a-40cd202a1183" class="">
+</p><p id="1ed28cbb-69e5-43a5-bde0-ce28de26d037" class=""><strong>$unwind with $group</strong></p><pre id="55e66824-23ca-4ab9-b4bb-2a47f0857edd" class="code"><code>// Input
+db.data.aggregate([
+    // stage-1
+    {
+        $unwind: &quot;$interests&quot;
+    },
+    {
+        $group: { _id: &quot;$interests&quot;, count: { $sum: 1 } }
+    }
+])</code></pre><pre id="32d0c63f-cc6f-4714-af64-3cf7bfd64839" class="code"><code>// Output
+/* 1 */
+{
+	&quot;_id&quot; : &quot;Gardening&quot;,
+	&quot;count&quot; : 41
+},
+
+/* 2 */
+{
+	&quot;_id&quot; : &quot;Writing&quot;,
+	&quot;count&quot; : 54
+},
+
+/* 3 */
+{
+	&quot;_id&quot; : &quot;Reading&quot;,
+	&quot;count&quot; : 59
+},
+
+/* 4 */
+{
+	&quot;_id&quot; : &quot;Travelling&quot;,
+	&quot;count&quot; : 40
+},
+
+/* 5 */
+{
+	&quot;_id&quot; : &quot;Cooking&quot;,
+	&quot;count&quot; : 54
+},
+
+/* 6 */
+{
+	&quot;_id&quot; : &quot;Gaming&quot;,
+	&quot;count&quot; : 49
+}</code></pre></details></li></ul><ul id="c232bfdc-6a2f-488a-9894-b9e77f4d72fa" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>$bucket $sort $limit</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></summary><p id="cddfadd2-2f2b-4391-8e5e-1644a63660c6" class=""><strong>Source:</strong></p><figure id="41cdcd90-15f5-449f-ba93-78325848007e"><a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucket/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">$bucket (aggregation)</div><div class="bookmark-description">.leafygreen-ui-zzkys8{font-size:16px;line-height:28px;font-family:&#x27;Euclid Circular A&#x27;,&#x27;Helvetica Neue&#x27;,Helvetica,Arial,sans-serif;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;line-height:13px;color:#016BF8;font-weight:400;-webkit-text-decoration:none!important;text-decoration:none!important;font-size:13px;}.leafygreen-ui-zzkys8:hover,.leafygreen-ui-zzkys8:focus,.leafygreen-ui-zzkys8:visited{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-zzkys8:focus{outline:none;}.leafygreen-ui-zzkys8:last-of-type{color:#1C2D38;}.leafygreen-ui-zzkys8:hover,.leafygreen-ui-zzkys8:focus{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-zzkys8:hover:not(:last-of-type),.leafygreen-ui-zzkys8:focus:not(:last-of-type){color:#1C2D38;}Docs Home.css-156usfp{cursor:default;}.css-156usfp:last-of-type{color:#1C2D38;} → .leafygreen-ui-i01tdw{font-size:13px;}.leafygreen-ui-i01tdw:last-of-type{color:#1C2D38;}.leafygreen-ui-i01tdw:hover,.leafygreen-ui-i01tdw:focus{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-i01tdw:hover:not(:last-of-type),.leafygreen-ui-i01tdw:focus:not(:last-of-type){color:#1C2D38;}MongoDB Manual</div></div><div class="bookmark-href"><img src="https://www.mongodb.com/docs/assets/favicon.ico" class="icon bookmark-icon"/>https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucket/</div></div><img src="https://www.mongodb.com/docs/assets/meta_generic.png" class="bookmark-image"/></a></figure><p id="f73a1ca5-903a-45fc-bd26-2659751e6ff7" class="">
+</p><p id="5131fcf5-b340-45c3-afe6-e247bc27584d" class=""><strong>$bucket</strong> হচ্ছে পাত্র, অনেকগুলো ডাটা কে কোন একটি ফিল্ডের বিভিন্ন বাউন্ডারি বা রেঞ্জের মাধ্যমে আলাদা আলাদা পাত্রে রাখতে পারি.</p><p id="86896dc6-b756-4370-b1d3-45ae9f9dc657" class="">
+</p><p id="1e48597b-0de9-4421-9337-a086297f2626" class="">যেমন: যদি বয়সের কথা বলি তাহলে 10 থেকে 20 বছর একটি পাত্রে, ২০ থেকে ৩০, বছর আরেকটি পাত্রে এবং ৩০ থেকে ৪০ বছর আরও একটি পাত্রে. এভাবে আমরা পাত্র বানিয়ে ডাটা গুলো রাখতে পারি</p><p id="197af811-eea7-4c6c-81f6-e2fc8f268a54" class="">
+</p><p id="3d4ae8df-b092-4e18-b467-290346848b14" class=""><strong>groupBy </strong>হবে একটি ফিল্ড যার উপর ভিত্তি করে <strong>$bucket</strong> তৈরি করা হবে</p><p id="3f4ee40d-fb31-4a00-97fe-5a94079b61b9" class=""><strong>boundaries </strong>হবে একটি এরে যার প্রতিটি বেলু হবে <strong>$bucket </strong>বাউন্ডারি বা রেঞ্জের</p><p id="10a86c4d-27ff-429f-bcdd-62f70893f57a" class=""><strong>default</strong> হিসেবে থাকবে উপরে বাউন্ডারির বাহিরে যে ডাটা গুলো থাকবে সেগুলো হবে ডিফল্ট ডাটা এবং <strong>output </strong>এর মাধ্যমে সবগুলো <strong>$bucket </strong>কে একটি অবজেক্ট আকারে প্রদান করবে.</p><p id="1a3dbc2d-ffc7-458e-a7b4-ad66e3802dda" class="">
+</p><p id="0083ca87-4da7-49e0-92fc-8c91e148fe7d" class="">আমরা চাইলে <strong><strong><strong><strong><strong><strong><strong><strong>output </strong></strong></strong></strong></strong></strong></strong></strong>এর ভিতরে <strong>accumulator operator - (count, max, min, avg, sum, push) </strong>ব্যবহার করে ডাটা রেজাল্ট তৈরি করতে পারি.</p><p id="aa81a8be-8a54-41df-b25f-89be9a2acea7" class="">
+</p><p id="230ddc5d-a0ee-4816-a431-0eba6356c73e" class=""><strong><strong><strong><strong><strong><strong><strong><strong>Syntax: </strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="97c1ef8c-4e6a-4c16-a3ac-05ec70a33971" class="code"><code>{
+  $bucket: {
+      groupBy: &lt;expression&gt;,
+      boundaries: [ &lt;lowerbound1&gt;, &lt;lowerbound2&gt;, ... ],
+      default: &lt;literal&gt;,
+      output: {
+         &lt;output1&gt;: { &lt;$accumulator expression&gt; },
+         ...
+         &lt;outputN&gt;: { &lt;$accumulator expression&gt; }
+      }
+   }
+}</code></pre><p id="44fde311-228e-44c1-819b-d7d93d0bdd3b" class="">
+</p><p id="08abe59c-1e2c-4627-b4c6-15f68f6aa488" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="0b2923f4-41ed-4db2-a50c-60e968aee590" class="code"><code>// Input
+db.data.aggregate([
+    // stage-1
+    {
+        $bucket: {
+            groupBy: &quot;$age&quot;,
+            boundaries: [20, 40, 60, 80],
+            default: &quot;others&quot;,
+            output: {
+                count: { $sum: 1 },
+                // documents: { $push: &quot;$$ROOT&quot; }
+            }
+        }
+    }
+])</code></pre><ul id="c396ec67-fde2-4268-bf6c-f62c2ce63c38" class="toggle"><li><details open=""><summary>Output:</summary><pre id="d9e289ad-07fb-4ed0-80b4-22be6996d663" class="code"><code>// Output
+/* 1 */
+{
+	&quot;_id&quot; : 20,
+	&quot;count&quot; : 14
+},
+
+/* 2 */
+{
+	&quot;_id&quot; : 40,
+	&quot;count&quot; : 18
+},
+
+/* 3 */
+{
+	&quot;_id&quot; : 60,
+	&quot;count&quot; : 23
+},
+
+/* 4 */
+{
+	&quot;_id&quot; : &quot;others&quot;,
+	&quot;count&quot; : 44
+}</code></pre></details></li></ul><p id="43021a9c-835e-430c-b439-6848563f0f8b" class="">
+</p><p id="cd0a6b03-0d1c-4213-87c0-0982bafff42c" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Apply $sort $limit $project</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="155cc4b9-69a4-47ad-b9ea-ba99e06022a0" class="code"><code>// Input
+db.data.aggregate([
+    // stage-1
+    {
+        $bucket: {
+            groupBy: &quot;$age&quot;,
+            boundaries: [20, 40, 60, 80],
+            default: &quot;others&quot;,
+            output: {
+                count: { $sum: 1 },
+                documents: { $push: &quot;$$ROOT&quot; }
+            }
+        }
+    },
+    // stage-2
+    {
+        $sort: { count: 1 }
+    },
+    // stage-3
+    {
+        $limit: 2
+    },
+    // stage-4
+    {
+        $project: {
+            count: 1,
+            documents: 1
+        }
+    }
+])</code></pre><ul id="3ca9b6f7-e704-44d7-baaf-b95e1c508b6a" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong>Output</strong></strong></strong></strong></strong></strong></summary><pre id="6e5e44a1-31bf-4b55-8b3b-9bfaf853630d" class="code"><code>/* 1 */
+{
+	&quot;_id&quot; : 20,
+	&quot;count&quot; : 14,
+	&quot;documents&quot; : [
+		{
+			&quot;_id&quot; : ObjectId(&quot;6406ad63fc13ae5a40000065&quot;),
+			&quot;name&quot; : {
+				&quot;firstName&quot; : &quot;Mariele&quot;,
+				&quot;lastName&quot; : &quot;Dangl&quot;
+			},
+			&quot;email&quot; : &quot;mdangl1@odnoklassniki.ru&quot;,
+			&quot;phone&quot; : &quot;(167) 7775715&quot;,
+			&quot;gender&quot; : &quot;Female&quot;,
+			&quot;age&quot; : 21,
+			&quot;birthday&quot; : &quot;3/13/2022&quot;,
+			&quot;favoutiteColor&quot; : &quot;Aquamarine&quot;,
+			&quot;friends&quot; : [
+				&quot;Najmus Sakib&quot;,
+				&quot;Mir Hussain&quot;,
+				&quot;Fahim Ahammed Firoz&quot;,
+				&quot;Tanmoy Parvez&quot;,
+				&quot;Abdur Rakib&quot;,
+				&quot;emdad&quot;
+			],
+			&quot;occupation&quot; : &quot;Food Chemist&quot;,
+			&quot;interests&quot; : [ &quot;Cooking&quot;, &quot;Writing&quot;, &quot;Reading&quot; ],
+			&quot;salary&quot; : 24000
+		},
+		....................
+]
+},
+
+/* 2 */
+{
+	&quot;_id&quot; : 40,
+	&quot;count&quot; : 18
+}</code></pre></details></li></ul></details></li></ul><ul id="c5a96a40-c5e3-4ed9-aee1-7e3ff2a1f33b" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>$lookup stage</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></summary><p id="37d62600-6f39-4d52-86af-644e7c47430b" class=""><strong><strong><strong><strong><strong><strong><strong><strong>Source: </strong></strong></strong></strong></strong></strong></strong></strong></p><figure id="3f630c0d-3b4f-4a02-9269-bf87219058ef"><a href="https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-lookup" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">MongoDB Aggregation: tutorial with examples and exercises | Studio 3T</div><div class="bookmark-description">Master the MongoDB aggregation pipeline. Follow along with query examples using the most important aggregation stages, and test your skills!</div></div><div class="bookmark-href"><img src="https://studio3t.com/apple-touch-icon.png?v=3eBmpN7O3k" class="icon bookmark-icon"/>https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-lookup</div></div><img src="https://studio3t.com/wp-content/uploads/2018/10/Mongodb.png" class="bookmark-image"/></a></figure><p id="782ed008-2cf5-4bcf-b1ea-fc355abc53c8" class="">
+</p><p id="3208ad6c-6a57-4f76-9609-af59043279c8" class=""><strong>$lookup </strong>অপারেটর ব্যবহার করা হয় কোন একটি ডকুমেন্টের ভিতরে রেফারেন্স হিসাবে যে আইডি বা ফরেন কি থাকে তার ওপর ভিত্তি করে সেই রেফারেন্স ডাটা কে কারেন্ট ডাটার সাথে  মার্জ করা.</p><p id="9fe97757-8801-4f5f-a6a2-38df411bcce6" class="">
+</p><p id="d020caac-f3b3-4557-8ecc-904afac0e70f" class="">যেমন একটি অর্ডার কালেকশনে অর্ডারের মধ্যে ইউজার আইডি রেফারেন্স হিসেবে ব্যবহার করা হয় এখন সেই আইডিকে রেফারেন্স করে ইউজার কে নিয়ে এসে অর্ডার ডকুমেন্টের সাথে ইউজারের ইনফরমেশন মার্জ করে প্রোভাইড করা হয়</p><p id="19740925-210e-4426-8165-42959b601eb5" class="">
+</p><p id="076c8b4a-08df-4175-9ff8-2a7a9bc947e8" class=""><strong>from:</strong> &quot;data&quot;, ফ্রম হচ্ছে যে  কালেকশন থেকে ডাটা রেফার করতেছে সেই কালেকশনের নাম</p><p id="d9856a2d-47aa-440d-8bc4-dab385159f11" class=""><strong>localField:</strong> &quot;userId&quot;, লোকাল ফিল্ড হচ্ছে কারেন্ট ডকুমেন্ট এর মধ্যে রেফারেন্স ভ্যালুকে কি নামে রাখা হয়েছে</p><p id="36c02067-0958-43a0-950f-bb6a49042883" class=""><strong>foreignField:</strong> &quot;_id&quot;, ফরেন ফিল্ড হচ্ছে রেফারেন্স কালেকশনের মধ্যে রেফারেন্স আইডিকে কি নামে দেওয়া আছে</p><p id="5aa35eef-619f-4ab3-bcba-26bcee1db85d" class=""><strong>as: </strong>&quot;userInfo&quot;  এজ হচ্ছে ডকুমেন্ট কে কি হিসেবে নামকরণ করতে চাই.</p><p id="a8cf70b6-fa57-489b-9572-abd25bb8f614" class="">
+</p><p id="3e8cda1f-f92f-47ca-a9d6-220bd98ef256" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="9be945da-d640-4365-8666-fc29a27b45bf" class="code"><code>// Input
+db.getCollection(&quot;practice-orders&quot;).aggregate([
+    {
+        $lookup: {
+            from: &quot;data&quot;,
+            localField: &quot;userId&quot;,
+            foreignField: &quot;_id&quot;,
+            as: &quot;userInfo&quot;
+        }
+    }
+])</code></pre><p id="07787fbb-fe40-473c-b3cf-87c99cf0157c" class="">
+</p><p id="8c23bd5c-d167-4904-8d8f-a596e0bd2aa4" class="">
+</p><p id="dd6eec69-7dca-4bea-86e8-c7c2f1c98b1f" class="">
+</p></details></li></ul><ul id="3fd4d46c-d602-4d46-8675-e1ca38234152" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong>$facet</strong></strong></strong></strong></strong></strong></summary><p id="a140fb39-ee27-424a-8610-16dbd3897e68" class=""><strong><strong><strong><strong><strong><strong><strong><strong>Sources: </strong></strong></strong></strong></strong></strong></strong></strong></p><figure id="a184d61c-e0d5-4370-854c-cd915215c2f9"><a href="https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-facet" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">MongoDB Aggregation: tutorial with examples and exercises | Studio 3T</div><div class="bookmark-description">Master the MongoDB aggregation pipeline. Follow along with query examples using the most important aggregation stages, and test your skills!</div></div><div class="bookmark-href"><img src="https://studio3t.com/apple-touch-icon.png?v=3eBmpN7O3k" class="icon bookmark-icon"/>https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-facet</div></div><img src="https://studio3t.com/wp-content/uploads/2018/10/Mongodb.png" class="bookmark-image"/></a></figure><p id="03039396-67e5-4ebb-aed0-3e96a24fe186" class="">
+</p><figure id="f9072511-eee6-4ece-a088-5d8580031332"><a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/facet/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">$facet (aggregation)</div><div class="bookmark-description">.leafygreen-ui-zzkys8{font-size:16px;line-height:28px;font-family:&#x27;Euclid Circular A&#x27;,&#x27;Helvetica Neue&#x27;,Helvetica,Arial,sans-serif;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;line-height:13px;color:#016BF8;font-weight:400;-webkit-text-decoration:none!important;text-decoration:none!important;font-size:13px;}.leafygreen-ui-zzkys8:hover,.leafygreen-ui-zzkys8:focus,.leafygreen-ui-zzkys8:visited{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-zzkys8:focus{outline:none;}.leafygreen-ui-zzkys8:last-of-type{color:#1C2D38;}.leafygreen-ui-zzkys8:hover,.leafygreen-ui-zzkys8:focus{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-zzkys8:hover:not(:last-of-type),.leafygreen-ui-zzkys8:focus:not(:last-of-type){color:#1C2D38;}Docs Home.css-156usfp{cursor:default;}.css-156usfp:last-of-type{color:#1C2D38;} → .leafygreen-ui-i01tdw{font-size:13px;}.leafygreen-ui-i01tdw:last-of-type{color:#1C2D38;}.leafygreen-ui-i01tdw:hover,.leafygreen-ui-i01tdw:focus{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-i01tdw:hover:not(:last-of-type),.leafygreen-ui-i01tdw:focus:not(:last-of-type){color:#1C2D38;}MongoDB Manual</div></div><div class="bookmark-href"><img src="https://www.mongodb.com/docs/assets/favicon.ico" class="icon bookmark-icon"/>https://www.mongodb.com/docs/manual/reference/operator/aggregation/facet/</div></div><img src="https://www.mongodb.com/docs/assets/meta_generic.png" class="bookmark-image"/></a></figure><p id="71ee8e9f-ee90-4f62-98fa-41ad1d82a58a" class="">
+</p><p id="5d4b5747-135e-4557-b13e-b09bae1a3e11" class="">কোন একটা কালেকশনের উপর রিপোর্ট জেনারেট করার জন্য মাল্টিপল কন্ডিশন ভিত্তিক অপারেশন চালাতে হয় এর জন্য <strong>$facet</strong> অপারেটর মাল্টিপল <strong>Pipeline</strong> প্রোভাইড করে প্রতিটি পাইপ লাইনে একাধিক <strong><strong><strong><strong><strong>Stage</strong></strong></strong></strong></strong> থাকতে পারে যেমন:</p><p id="65011563-d8e0-41a1-b3a7-992720ea0471" class="">
+</p><pre id="dd555cfa-4c23-4949-80e5-ed4941fd6ec0" class="code"><code>// Input
+db.data.aggregate([
+    {
+        $facet: {
+            // pipeline-1
+            &quot;friendsCounts&quot;: [
+                // stage-1
+                { $unwind: &quot;$friends&quot; },
+                // stage-2
+                { $group: { _id: &quot;$friends&quot;, count: { $sum: 1 } } }
+            ],
+            // pipeline-2
+            &quot;educationCount&quot;: [
+                // stage-1
+                { $unwind: &quot;$education&quot; },
+                // stage-2
+                { $group: { _id: &quot;$education&quot;, count: { $sum: 1 } } }
+            ],
+            // pipeline-3
+            &quot;skillsCount&quot;: [
+                // stage-1
+                { $unwind: &quot;$skills&quot; },
+                // stage-2
+                { $group: { _id: &quot;$skills&quot;, count: { $sum: 1 } } }
+            ]
+        }
+    }
+
+])</code></pre></details></li></ul><ul id="8959f735-b807-45bc-b810-36de50608381" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Index, execution time</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></summary><p id="be2f2a73-8302-42b2-8ae5-ce1665841e19" class="">ইন্ডেক্সিং দুইভাবে করা যায় একটা হচ্ছে মঙ্গলডিবি কম্পাস ব্যবহার করে আরেকটা হচ্ছে কোডের মাধ্যমে.</p><p id="500a9527-86d0-40e8-a861-fbc1184747a7" class="">Indexing করার সময় value গুলোকে ascending অথবা descending অর্ডারে নেওয়ার আগে চিন্তা করতে হবে যে বেলুর উপর ফিল্টারিং করে ইনডেক্সিং করতে চাচ্ছি সেটি অ্যালফাবেটিক্যালি শুরুর দিকে আছে নাকি শেষের দিকে তার উপরে ডিপেন্ড করে ascending অথবা descending অর্ডারে ইনডেক্সিং করলে সময় কম লাগে.</p><h3 id="cc4d08ff-15f8-4cfc-b03c-2ff02e5ae79d" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong>Single index</strong></strong></strong></strong></strong></strong></strong></strong></strong></h3><p id="fd6f7486-281d-4634-945f-da33bdcafd45" class="">সিঙ্গেল ফিল্ডের উপর index চালালে সেটাকে বলা হয় single index.</p><p id="61ed93ca-3ae3-49d5-9783-d7f64ed7c044" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Create new single index</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="52fe2e2e-a503-462a-90be-aca7fa02c802" class="code"><code>// Create index for email field. 
+db.getCollection(&quot;messive-data&quot;).createIndex({email: 1}) // 1 mean Ascending order</code></pre><p id="98134e76-c299-4fd2-87c7-f3251da1dd45" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Drop index</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="29af7338-8151-42ba-af06-87e46f77753c" class="code"><code>db.getCollection(&quot;messive-data&quot;).dropIndex({email: 1})</code></pre><p id="c28289a6-83c1-4d55-8a87-7a70aa697e77" class="">
+</p><h3 id="14aec451-2163-4d69-a4ec-60990c03b991" class="">Multiple / Compound<strong><strong><strong><strong><strong><strong><strong><strong><strong> index</strong></strong></strong></strong></strong></strong></strong></strong></strong></h3><p id="805ae847-e067-4170-bc63-bd6d8841212c" class="">সিঙ্গেল ফিল্ডের উপর index চালালে সেটাকে বলা হয় multiple index.</p><p id="6a60b171-80c4-4d8f-8a85-afd394f09573" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Create multiple index</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><p id="e7734ccf-f1df-4b98-9484-4d961fee4c20" class="">Go to MongoDB compass, select collection and create multiple index.</p><p id="23f29226-d15a-47d8-8b8f-c6cf5c6378a1" class="">or</p><p id="2e29400d-1a22-4dab-8c10-5a34eeecadb3" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Create compound index</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="855d42ad-cb6f-400e-8205-f6a89a8743b3" class="code"><code>db.getCollection(&quot;messive-data&quot;).createIndex(
+    { &quot;about&quot;: 1, &quot;email&quot;: 1 },  //MongoDB 4.2 wildcard index on a specific field { &quot;field.$**&quot; : 1 }, MongoDB 7.0 Compound Wildcard Indexes { key: 1, &quot;customFields.$**&quot;: 1 }
+)</code></pre><p id="bb95e7af-82fd-4a76-a07b-5085162c9f58" class="">
+</p><p id="9f9fb0bd-8a62-4154-9097-b57cf928ff7d" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Drop compouund index</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="8340022a-de24-4a56-bb61-ec54ba5946e7" class="code"><code>db.getCollection(&quot;messive-data&quot;).dropIndex(
+    { &quot;about&quot;: 1, &quot;email&quot;: 1 },  //MongoDB 4.2 wildcard index on a specific field { &quot;field.$**&quot; : 1 }, MongoDB 7.0 Compound Wildcard Indexes { key: 1, &quot;customFields.$**&quot;: 1 }
+)</code></pre><p id="d568f701-aadf-4b3a-8cda-4baf8f79e62f" class="">
+</p><p id="315d9a9b-284e-4ea9-9bea-f99f8c0c27eb" class="">কোন একটি অপারেশন কমপ্লিট করতে কত সময় লাগছে তা বের করার জন্য <strong>.explain(&quot;executionStats&quot;)</strong> ব্যবহার করলে সম্পূর্ণ অপারেশন ডিটেলস পাওয়া যায়.</p><p id="c3a5808f-a8bb-4ef9-9f6e-fcaba4abe886" class=""><strong>Example:</strong></p><pre id="661f35de-31e3-4545-a128-6cab79bd208c" class="code"><code>db.getCollection(&quot;messive-data&quot;).find({ _id: ObjectId(&quot;654dbfa0ac03b4ef85f2a90a&quot;) })
+.explain(&quot;executionStats&quot;)</code></pre><p id="18c3f600-0e16-4cfc-bf81-23008b86a72a" class="">
+</p></details></li></ul><ul id="7daef3e8-47d1-42de-a56b-0fb42a728854" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Search with indexing</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></summary><p id="5a33ad22-d8c0-4f14-91e0-96ebb044c9be" class="">First create index the search field / fields, and type must be use<strong><strong><strong><strong><strong><strong><strong> “text”</strong></strong></strong></strong></strong></strong></strong></p><pre id="ba34cd55-34d3-40c9-9fcf-4cf4b15034ad" class="code"><code>// For single field
+db.getCollection(&quot;messive-data&quot;).createIndex({ about: &quot;text&quot;})
+
+// For multiple fields
+db.getCollection(&quot;messive-data&quot;).createIndex({ about: &quot;text&quot;, address: &quot;text&quot; })</code></pre><p id="fb1a0c15-85c5-4d09-bf4f-d0241eea5284" class="">
+</p><p id="e1bb8cac-d2b5-48b8-b4fa-aa9a2d3bdf04" class=""><strong><strong><strong><strong><strong><strong>Search</strong></strong></strong></strong></strong></strong></p><pre id="35d90f2e-33c9-4fe3-a86c-b3d6e2081d2f" class="code"><code>db.getCollection(&quot;messive-data&quot;).find({ $text: { $search: &quot;voluptate&quot; } })</code></pre><p id="58f06af1-a0e8-4814-a908-f7e7c3101d1e" class=""><strong>$text</strong> means text index.</p></details></li></ul><p id="23d03476-f08a-482d-8863-c1c290f48d04" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
