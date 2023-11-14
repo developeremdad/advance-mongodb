@@ -1,0 +1,756 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>MongoDB Queries</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8649bb2e-61a7-4b3b-8191-3fa2bf28a2b4" class="page sans"><header><h1 class="page-title">MongoDB Queries</h1><p class="page-description"></p></header><div class="page-body"><p id="da5b5628-40c7-46b9-abe6-c1eec413f21d" class="">Resource Link: </p><figure id="70ec2543-ffdb-46be-851c-bf9b3c25f56c"><a href="https://www.mongodb.com/docs/manual/reference/operator/query-comparison/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Comparison Query Operators</div><div class="bookmark-description">.leafygreen-ui-zzkys8{font-size:16px;line-height:28px;font-family:&#x27;Euclid Circular A&#x27;,&#x27;Helvetica Neue&#x27;,Helvetica,Arial,sans-serif;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;line-height:13px;color:#016BF8;font-weight:400;-webkit-text-decoration:none!important;text-decoration:none!important;font-size:13px;}.leafygreen-ui-zzkys8:hover,.leafygreen-ui-zzkys8:focus,.leafygreen-ui-zzkys8:visited{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-zzkys8:focus{outline:none;}.leafygreen-ui-zzkys8:last-of-type{color:#1C2D38;}.leafygreen-ui-zzkys8:hover,.leafygreen-ui-zzkys8:focus{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-zzkys8:hover:not(:last-of-type),.leafygreen-ui-zzkys8:focus:not(:last-of-type){color:#1C2D38;}Docs Home.css-156usfp{cursor:default;}.css-156usfp:last-of-type{color:#1C2D38;} → .leafygreen-ui-i01tdw{font-size:13px;}.leafygreen-ui-i01tdw:last-of-type{color:#1C2D38;}.leafygreen-ui-i01tdw:hover,.leafygreen-ui-i01tdw:focus{-webkit-text-decoration:none;text-decoration:none;}.leafygreen-ui-i01tdw:hover:not(:last-of-type),.leafygreen-ui-i01tdw:focus:not(:last-of-type){color:#1C2D38;}MongoDB Manual</div></div><div class="bookmark-href"><img src="https://www.mongodb.com/docs/assets/favicon.ico" class="icon bookmark-icon"/>https://www.mongodb.com/docs/manual/reference/operator/query-comparison/</div></div><img src="https://www.mongodb.com/docs/assets/meta_generic.png" class="bookmark-image"/></a></figure><p id="672b1da4-b51c-4b2a-980d-3a574426546f" class="">
+</p><p id="2e327468-a565-434e-87cb-45d3ced33560" class="">যখনই কোন একটা অপারেটর আসবে তখনই দুই পাশে একটা সেকেন্ড ব্র্যাকেট {} হবে</p><h3 id="fa47904c-d666-4951-b2d9-2a9dec2b8af7" class=""><strong>Comparison Query Operators</strong></h3><table id="75909469-9de3-442b-aad6-724c8a3c8d92" class="simple-table"><tbody><tr id="0c595bcd-f0f2-4e04-bdc3-c6942cd13921"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/eq/#mongodb-query-op.-eq"><code>$eq</code></a></td><td id="Jx^^" class="" style="width:574px">Matches values that are equal to a specified value.</td></tr><tr id="db6b5e83-0a11-4e3e-bdfd-933e5512b2ba"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/gt/#mongodb-query-op.-gt"><code>$gt</code></a></td><td id="Jx^^" class="" style="width:574px">Matches values that are greater than a specified value.</td></tr><tr id="b797e35c-2852-4df3-9962-95ccc5a98f03"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/gte/#mongodb-query-op.-gte"><code>$gte</code></a></td><td id="Jx^^" class="" style="width:574px">Matches values that are greater than or equal to a specified value.</td></tr><tr id="bc4ce3de-eb98-4086-ace6-60b5b2948c2b"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/in/#mongodb-query-op.-in"><code>$in</code></a></td><td id="Jx^^" class="" style="width:574px">Matches any of the values specified in an array.</td></tr><tr id="990660c6-25fd-413e-b2d3-be300b679f92"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/lt/#mongodb-query-op.-lt"><code>$lt</code></a></td><td id="Jx^^" class="" style="width:574px">Matches values that are less than a specified value.</td></tr><tr id="d31798d4-df57-4d11-bd86-bde15777caec"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/lte/#mongodb-query-op.-lte"><code>$lte</code></a></td><td id="Jx^^" class="" style="width:574px">Matches values that are less than or equal to a specified value.</td></tr><tr id="3738f72f-625d-4be3-b54c-e9b43f9dcbee"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/ne/#mongodb-query-op.-ne"><code>$ne</code></a></td><td id="Jx^^" class="" style="width:574px">Matches all values that are not equal to a specified value.</td></tr><tr id="3a9e13bf-fa9b-4e43-aa00-05361d83f326"><td id="s?Hf" class=""><a href="https://www.mongodb.com/docs/manual/reference/operator/query/nin/#mongodb-query-op.-nin"><code>$nin</code></a></td><td id="Jx^^" class="" style="width:574px">Matches none of the values specified in an array.</td></tr></tbody></table><ul id="944b468b-bfc5-4147-bbf5-ed2ed1bcf1d0" class="toggle"><li><details open=""><summary><strong>$eq</strong></summary><p id="74c30d68-5071-4035-b0b8-76cea15ff297" class=""><strong>Syntax:  </strong></p><p id="9a4b0d61-49e1-4549-9ca6-9954beffa8b1" class="">{ &lt;fieldName&gt;: { $eq: &lt;fieldValue&gt; } }</p><p id="e505da3c-f50f-42e0-ac65-0c865c78dcb6" class=""><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></p><pre id="4aa6c05d-780d-406f-bef6-06aa12ec89d2" class="code"><code>db.collection.find({
+    age: { $eq: 19 }
+})</code></pre><p id="9011196f-1358-4666-9d31-3c1bcd814efe" class="">
+</p></details></li></ul><ul id="fb4cb436-d7ed-4bcf-9fd3-939d8f025ca3" class="toggle"><li><details open=""><summary><strong>$gt</strong></summary><p id="fd768751-6010-4351-8b3d-0135c8e51434" class=""><strong>Syntax:  </strong></p><p id="e6be3d35-58ac-483d-a212-a45e8a2c06c7" class="">{ field: { $gt: value } }</p><p id="ab28a5d2-8c3c-40a3-8839-1875b5241578" class=""><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></p><pre id="653fe102-44d0-4671-8797-dcf1237ba0a2" class="code"><code>db.collection.find({
+    age: { $gt: 19 }
+})</code></pre></details></li></ul><ul id="a6814130-7e0a-4f79-8bba-1a0ba54dd6d6" class="toggle"><li><details open=""><summary> $<strong>gte</strong></summary><p id="991f184a-cb73-444f-a6d5-349b55c522ff" class=""><strong>Syntax:</strong>  </p><p id="8c8ba650-56f2-486e-bc70-ddfb8ee0b49f" class="">{ field: { $in: [&lt;value1&gt;, &lt;value2&gt;, ... &lt;valueN&gt; ] } }</p><p id="de374a8f-a2ad-4e5c-9d7f-009f4834cfa1" class=""><strong>Example:</strong></p><pre id="b9c4f8e9-7036-42c9-b998-14138881741d" class="code"><code>db.collection.find({
+    age: { $gte: 19 }
+})</code></pre></details></li></ul><ul id="07c71b6b-6d4a-4b08-96f1-1f427da9f2ee" class="toggle"><li><details open=""><summary><strong>$in</strong></summary><p id="af8ca721-26d0-4bf3-af9f-b9efa5323afd" class="">Array of values এর মধ্যে যেকোনো একটি ভেলোর সাথে $In এর ভেলোর যেকোনো একটি ভ্যালু কে এক্সিস্ট করলেই হবে।</p><p id="a6ddf1e1-8941-4ae5-a823-ca85bfefc1bf" class=""><strong>Syntax:  </strong></p><p id="1ab6dc7e-fe19-47fe-83a9-915f6235e323" class="">{ &lt;fieldName&gt;: { <strong>$in</strong>: &lt;fieldValue&gt; } }</p><p id="1289d5fc-adda-4a24-a6f0-db1857974474" class=""><strong>Example:</strong></p><pre id="34cf9898-3eb4-4ce3-aa68-1de41e80d4cc" class="code"><code>db.collection.find({
+    friends: { $in: [&quot;Abdur Rakib&quot;, &quot;Emdadullah&quot;] }
+}).projection({ friends: 1 })</code></pre><p id="e46fc450-cac4-4744-bd58-6cddc5d0ebf4" class="">
+</p></details></li></ul><ul id="a54a6135-49b4-4425-aa20-84a1184e9d32" class="toggle"><li><details open=""><summary><strong>$lt</strong></summary><p id="f370577d-56e8-40eb-aa9e-ec3ff275fc0f" class=""><strong>Syntax:  </strong></p><p id="35f5c989-bd85-4504-90e2-17b302793fc8" class="">{ field: { $lt: value } }</p><p id="0d1ec703-fe5e-4937-b006-ce339e3efe2e" class=""><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></p><pre id="259ef507-9175-48bc-bb5d-31c21577f8a5" class="code"><code>db.collection.find({
+    age: { $lt: 19 }
+})</code></pre></details></li></ul><ul id="4f84d0bc-76da-47e5-b6de-70b2ddf3cbff" class="toggle"><li><details open=""><summary><strong>$lte</strong></summary><p id="4592e8de-0bb4-4a5d-8b41-365b46cc62d4" class=""><strong>Syntax:  </strong></p><p id="23a2a4ad-004d-4565-b6d1-ca592dc80a25" class="">{ field: { $lte: value } }</p><p id="68559821-ea62-4e2c-b66e-e68f2b620590" class=""><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></p><pre id="a679a40f-4d6f-4853-affb-7098192e42f3" class="code"><code>db.collection.find({
+    age: { $lte: 19 }
+})</code></pre></details></li></ul><ul id="2de116cf-28c4-41b7-b951-7c782dd5b1f0" class="toggle"><li><details open=""><summary><strong>$ne</strong></summary><p id="98af7e4a-91c3-4c2f-8173-0d304bc7851d" class=""><strong>Syntax:  </strong></p><p id="13d6689c-c33b-452f-819a-5e64b13e4476" class="">{ field: { $ne: value } }</p><p id="0fb2f882-3b27-468f-9a1c-18ea37c32a9e" class=""><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></p><pre id="f935515e-48a4-469b-968b-2ce7e44a5f38" class="code"><code>db.collection.find({
+    age: { $ne: 19 }
+})</code></pre></details></li></ul><ul id="79dee116-3fa7-4fb3-be56-e62b902a0806" class="toggle"><li><details open=""><summary><strong>$nin</strong></summary><p id="81d86be8-f542-4271-81d4-76f12245c3f6" class="">$nin ভেলুগুলো যদি কোন এ রাতে একজিস্ট না করে</p><p id="b0125373-2a87-4e1e-92a0-53d114807610" class=""><strong>Syntax:  </strong></p><p id="f91abf7b-2c63-4115-ad70-403f744b0651" class="">{ field: { $nin: [ &lt;value1&gt;, &lt;value2&gt; ... &lt;valueN&gt; ] } }</p><p id="1b7e635b-6c8e-48ca-840b-d71d2835c65b" class=""><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></p><pre id="26ead038-f68e-4561-81b3-7ada6fd38f6b" class="code"><code>db.collection.find({
+    friends: { $nin: [&quot;Abdur Rakib&quot;, &quot;Emdadullah&quot;] }
+}).projection({ friends: 1 })</code></pre><p id="536f6f03-5ff4-4013-b91c-b77aa8847eea" class=""> </p></details></li></ul><p id="75ccbc77-7ac9-45a6-95ee-761546d93866" class="">
+</p><h3 id="27deb511-d1ff-4cd3-94fe-45dbc4a7cf0d" class=""><strong>Logical Query Operators</strong></h3><ul id="bdf344e9-ee28-46f3-a492-ddd6bf68460a" class="toggle"><li><details open=""><summary><strong>$and</strong></summary><p id="f940a801-7592-4172-80b4-fc87dd6e5e82" class="">Array of expression এর এক বা একাধিক এক্সপ্রেশন সত্যি হতে হবে</p><p id="9d1a389d-7b41-44c8-bc9b-db29f050a76c" class=""><strong>Syntax:</strong>  </p><p id="fef9c494-2683-4a62-8bf2-37a9884168d8" class="">{ $and: [ { &lt;expression1&gt; }, { &lt;expression2&gt; } , ... , { &lt;expressionN&gt; } ] }</p><p id="5457a0f4-1887-4548-9a35-e5a47a7984ca" class=""><strong>Example: </strong></p><pre id="ab7b0644-0b35-4451-bc8c-bac379ed2f43" class="code"><code>db.collection.find({
+    $and: [
+        { age: { $lt: 19 } },
+        { friends: { $in: [&quot;Fahim Ahammed Firoz&quot;, &quot;Nahid Hasan Bulbul&quot;] } }
+    ]
+}).projection({ friends: 1, age: 1 })</code></pre></details></li></ul><ul id="6e9504af-37c5-4365-a2d6-0ff0ffedae6c" class="toggle"><li><details open=""><summary><strong>$or</strong></summary><p id="e1326dbe-51b1-4bbc-9084-d7aade68f68f" class="">Array of expression এর যেকোনো একটি এক্সপ্রেশন সত্য হলেই হবে</p><p id="c0e693d9-77df-4e5b-bcbe-decc5f0735b1" class=""><strong>Syntax:</strong>  </p><p id="e2eea658-1b13-43c6-ac13-06f869d1f088" class="">{ $and: [ { &lt;expression1&gt; }, { &lt;expression2&gt; } , ... , { &lt;expressionN&gt; } ] }</p><p id="ac1d8ac1-5211-42ca-a014-2cd32c3d7866" class=""><strong>Example: </strong></p><pre id="37343566-51e3-4679-bbf3-7ff3d3bba4ea" class="code"><code>db.collectionfind({
+    $or: [
+        { age: { $lt: 20 } },
+        { salary: 100 }
+    ]
+})
+    .projection({ salary: 1, age: 1 })</code></pre><p id="4d0261d5-b269-4e18-b625-c793742a9cd9" class="">
+</p></details></li></ul><p id="d947c9cc-fcc1-49da-9152-790284f6cdbe" class="">
+</p><h3 id="33318f2e-6beb-4d2c-8c9e-bbcf27e12672" class=""><strong>Array Query Operators</strong></h3><ul id="c06b918e-6c3a-490d-9393-6445cc7413c4" class="toggle"><li><details open=""><summary><strong>$all</strong></summary><p id="c0598767-8062-4e0d-b117-2b18c3663747" class="">Array এর এলিমেন্টের পজিশন যাই হোক না কেন ডাটা ম্যাচ করলেই সেটা কাজ করবে, এটি অনেকটা $and অপারেটর এর মত কাজ করে</p><p id="1ff44513-9edb-4ea3-b096-6cac0f034ac2" class="">
+</p><p id="2b214620-5428-4d47-86c3-6a044bbf85ab" class=""><strong><strong><strong><strong><strong><strong><strong><strong>Syntax: </strong></strong></strong></strong></strong></strong></strong></strong></p><p id="1a125a10-bd74-406b-b710-157daba11697" class="">{ &lt;arrayField&gt;: { $all: [ &lt;value1&gt; , &lt;value2&gt; ... ] } }</p><p id="6812d661-8349-4b67-9b1c-b0093df0132a" class="">
+</p><p id="7df60d48-ac01-4016-a524-e5899bc81aff" class=""><strong><strong><strong><strong><strong><strong><strong><strong>Example:</strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="32f18bae-e0f2-414f-a982-4f2417d869d9" class="code"><code>db.collection.find({
+    friends: { $all: [&quot;Mir Hussain&quot;, &quot;Abdur Rakib&quot;, &quot;Fahim Ahammed Firoz&quot;, &quot;Tanmoy Parvez&quot;] }
+})
+    .projection({ friends: 1 })</code></pre><p id="1152e16d-0d17-4dd1-86cd-d76424425be1" class="">
+</p></details></li></ul><ul id="deed9702-1eda-4f3d-a170-a07b9e1fdc01" class="toggle"><li><details open=""><summary><strong>$elemMatch — Array of object</strong></summary><p id="14e10c01-42d2-479f-9369-5749b88bb1cd" class="">Array of object এর এলিমেন্ট ম্যাচ করাতে চাইলে <strong>$elemMatch</strong> ব্যবহার করতে হবে,  এটি পজিশন ম্যাটার করে না</p><p id="eb8d0e55-988f-4dac-8d8c-f851efc513fb" class="">
+</p><p id="43b01bc8-3cc0-4233-b632-b8880c26568e" class=""><strong><strong><strong>Syntax: </strong></strong></strong></p><p id="5e64bc83-4ae1-49ef-9efc-cbb70b41e5e4" class="">{ &lt;field&gt;: { $elemMatch: { &lt;query1&gt;, &lt;query2&gt;, ... } } }</p><p id="314b7dcc-1aab-4ba6-b8e9-c40c876b862a" class="">
+</p><p id="25873265-882e-4f9d-8146-74160798454d" class=""><strong>Example:</strong></p><pre id="39aa3bf0-3c9a-4689-b8fc-7fe0d6da2c49" class="code"><code>db.collection.find({
+    education: { $elemMatch: {
+       major: &quot;Art&quot;,
+       year: 2003
+    } }
+})
+.projection({education: 1})</code></pre><p id="e6902cfa-d2d3-4c09-b206-b35e609d1e83" class="">
+</p></details></li></ul><ul id="8711dcb8-fc7e-4110-9d69-7a34688506bd" class="toggle"><li><details open=""><summary><strong>$size</strong></summary><p id="4161bbca-adce-4066-a722-4899abc99759" class="">এটা array সাইজ চেক করে এবং কোন একটা array এমটি কিনা সেটা চেক করে</p><p id="4bc31dad-68f8-4169-9f2b-ec1d6b17159e" class="">
+</p><p id="a2cfb5f4-c547-4c27-b27d-9ef6978dade2" class=""><strong>Syntax:</strong> </p><p id="2e0fc0a4-6870-4f11-b400-e836787517ff" class="">db.collection.find( { field: { $size: 1 } } );</p><p id="d56ed4d3-395e-4bd0-82ed-4638fb0893e5" class="">
+</p><p id="05e324cc-3fb8-4264-ba8f-4bea5b5e87ea" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong>Example: </strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="60d4342b-90b2-4cfb-98bd-d607100be95f" class="code"><code>db.collection.find({
+    education: { $size: 3 }
+})
+    .projection({ education: 1 })</code></pre></details></li></ul><p id="340265af-dd74-453d-b75f-b9b3c158ff9a" class="">
+</p><h3 id="13240e45-563a-49e1-a2ee-b9a110e22edb" class=""><strong>Element Query Operators</strong></h3><ul id="296106e7-7e30-4c4f-bc0d-be312148038f" class="toggle"><li><details open=""><summary><strong>$exists</strong></summary><p id="3f03e8d5-ab82-489e-8943-1f7f00d9b607" class="">কোন একটা ফিল্ড ডকুমেন্ট এর মধ্যে এক্সিস্ট করে কিনা সেটা চেক করার জন্য $exists ব্যবহার করা হয়।</p><p id="f8badec0-88cc-4882-9270-d18f298c34e2" class="">
+</p><p id="be9cf936-8a06-45db-8905-27e9222cf853" class=""><strong><strong><strong><strong>Syntax: </strong></strong></strong></strong></p><p id="a82f5bcb-2f26-4091-aa1f-884099af21cc" class="">{ field: { $exists: &lt;boolean&gt; } } </p><p id="6cd21821-b5c7-4a79-8eac-3a4834b9fae2" class="">
+</p><p id="37734e06-7ce2-40fb-b8f7-136894dc2494" class=""><strong>Example:</strong></p><pre id="d35c82ea-8157-4c66-aa33-e207bc0d7d3e" class="code"><code>db.collection.find({
+    education: { $exists: true }
+})
+    .projection({ education: 1 })</code></pre></details></li></ul><ul id="893336cc-cb1f-425e-a65b-648fa47010d9" class="toggle"><li><details open=""><summary><strong>$type</strong></summary><p id="11c15a6a-0551-4b63-a061-9fe03879c980" class="">$type অপারেটর ব্যবহার করে কোন একটা ফিল্ডের টাইপ চেক করা হয়</p><p id="cae33157-0b8d-4f4d-b7fe-c1261280b62e" class="">
+</p><p id="1391bae3-1986-414f-9bd8-d4b0a7e33a87" class=""><strong>Syntax:</strong></p><p id="bf79de20-fa01-4026-b5d7-4a9d31b98d58" class="">{ field: { $type: &lt;Enter checking type&gt; } }</p><p id="e1ab44e0-0ec2-450a-9f14-4e397029288a" class="">
+</p><p id="d451fd1c-40fa-48e2-908b-aaf56258563e" class=""><strong>Example:</strong></p><pre id="165e222c-333f-4dc6-908f-83397e01f5fd" class="code"><code>db.collection.find({
+    &quot;education.year&quot;: { $type: &quot;number&quot; }
+})
+    .projection({ education: 1 })</code></pre></details></li></ul><p id="e5f1cfa8-3675-4789-8c24-331a2fb702a0" class="">
+</p><h3 id="2dbbdb6a-fbe7-4f6d-9a69-9e4b1f5cd961" class=""><strong>Field Update Operators</strong></h3><ul id="c399b370-e6a6-4ba4-bb0a-02b4c9fc3018" class="toggle"><li><details open=""><summary><strong>$Set</strong></summary><p id="c2d3efc1-8848-4fbc-ad6e-0fc3089e6c3a" class="">কোন একটা ফিল্ডার এর ভ্যালু কে নতুন ভ্যালু দিয়ে রিপ্লেস করে</p><p id="874509ee-e406-44da-b193-a392b33d4581" class="">
+</p><p id="bc9e3dc3-be08-4b5a-9cfc-74f80f063923" class=""><strong>Syntax:</strong> </p><p id="12ff5d1c-3d9c-4c12-8e91-7f628ffd65bc" class="">{ $set: { &lt;field1&gt;: &lt;value1&gt;, ... } }</p><p id="05f7601d-15cf-46ca-86e2-b1cc694a786f" class="">
+</p><p id="86e3bc5b-ec86-4c49-8402-07e35ff0a7a1" class="">Example: </p><pre id="7b8915eb-a58d-42d4-9ab3-55b563bc2f9f" class="code"><code>db.collection.updateOne(
+    { _id: ObjectId(&quot;6406ad63fc13ae5a40000065&quot;) },
+    {
+        $set: { salary: 24000 }
+    },
+    { new: true }
+)</code></pre><p id="3816d2c3-6ce8-4d7a-b40c-bd0ad77f892e" class="">
+</p></details></li></ul><p id="2f946e45-a0c4-4a88-9701-19c2cb3dd3f8" class="">
+</p><h3 id="b90adb87-4d83-4ffe-8908-d7445cd5182c" class=""><strong>Array Update Operators</strong></h3><ul id="27aa3c1f-146c-4306-b3d9-754448e89652" class="toggle"><li><details open=""><summary><strong>$addToSet</strong></summary><p id="6ae8c6d1-1235-4519-ac0a-ccf0a8d9ed5a" class="">এটি array তে নতুন ভ্যালু ইনসার্ট করার আগে চেক করে ভ্যালু টি এর মধ্যে অলরেডি এক্সিস্ট করে কিনা। যদি এক্সিস্ট না করে তাহলে নতুন ভ্যালু ইনসার্ট করবে এবং এটি সব সময় নতুন ভ্যালু ইনসার্ট করে কিন্তু Push মেথড ডুপ্লিকেট ভ্যালু ইনসার্ট করে থাকে। এই হলো এর অ্যাডভান্টেজ।</p><p id="dd523aff-16ec-47f1-ae49-22af76b90e28" class="">
+</p><p id="c36cc18e-8095-4b87-a74f-980bb068ad64" class=""><strong><strong><strong>Syntax:</strong></strong></strong></p><p id="3a6dfcf6-812d-4415-ad07-a625da7ec34d" class="">{ $addToSet: { &lt;field1&gt;: &lt;value1&gt;, ... } }</p><p id="7fc7433e-d70d-46b2-bcab-8ad850872a95" class="">
+</p><p id="d5094385-0cb6-4135-b9a1-f9a3ca7e9384" class=""><strong>Examle:</strong></p><pre id="06bc9696-3e60-4912-b890-2489087a585d" class="code"><code>db.data.updateOne(
+    { _id: ObjectId(&quot;6406ad63fc13ae5a40000065&quot;) },
+    { $addToSet: {friends: &quot;emdad&quot;} }
+)</code></pre></details></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
