@@ -1,11 +1,16 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose'
+import app from './app'
+import config from './app/config'
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/l2-first-project");
+  try {
+    await mongoose.connect(config.database_url as string)
 
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+    app.listen(config.port, () => {
+      console.log(`Server is running on port ${config.port}`)
+    })
+  } catch (error) {
+    console.log(error)
+  }
 }
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+main()
