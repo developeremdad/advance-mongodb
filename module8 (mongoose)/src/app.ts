@@ -1,15 +1,24 @@
 import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
+import { StudentRoutes } from './app/modules/student/student.route'
+
 const app: Application = express()
 
-// parser
+//parsers
 app.use(express.json())
-app.use(cors)
+app.use(cors())
 
-app.get('/', (req: Request, res: Response) => {
-  const a = 10
+// application routes
+app.use('/api/v1/students', StudentRoutes)
 
-  res.send(`Hello World! ${a}`)
-})
+const getAController = (_req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Congratulation api running successfully.",
+    path: "/api/v1/health"
+  })
+}
+
+app.get('/health', getAController)
 
 export default app

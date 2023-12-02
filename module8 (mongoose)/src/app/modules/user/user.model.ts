@@ -1,7 +1,7 @@
-import { Schema } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { TUser } from './user.interface'
 
-const userModel = new Schema<TUser>(
+const userSchema = new Schema<TUser>(
   {
     id: {
       type: String,
@@ -12,7 +12,7 @@ const userModel = new Schema<TUser>(
       type: String,
       required: true,
     },
-    needsPasswordChange: {
+    needPasswordChange: {
       type: Boolean,
       default: true,
     },
@@ -34,3 +34,6 @@ const userModel = new Schema<TUser>(
     timestamps: true,
   },
 )
+
+const User = model<TUser>("User", userSchema)
+export default User
