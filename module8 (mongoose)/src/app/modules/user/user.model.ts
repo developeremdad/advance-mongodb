@@ -35,5 +35,13 @@ const userSchema = new Schema<TUser>(
   },
 )
 
-const User = model<TUser>("User", userSchema)
+userSchema.pre('save', async function (next) {
+  const user = await User.findOne({ id: this.id })
+  if (user) {
+    throw new Error('User already exist')
+  }
+  next()
+})
+
+const User = model<TUser>('User', userSchema)
 export default User
