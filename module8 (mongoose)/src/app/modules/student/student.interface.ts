@@ -2,7 +2,7 @@ import { Model } from 'mongoose'
 
 export type TUserName = {
   firstName: string
-  middleName: string
+  middleName?: string
   lastName: string
 }
 
