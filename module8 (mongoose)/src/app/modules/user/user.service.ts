@@ -1,53 +1,36 @@
 import config from '../../config'
+import { TStudent } from '../student/student.interface'
+import { Student } from '../student/student.model'
 import { TUser } from './user.interface'
 import User from './user.model'
 
-const createUserIntoDB = async (password: string, studentData: TUser) => {
+const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   // create a user object
   const userData: Partial<TUser> = {}
 
-  // If password is not given, use default password
-  userData.password = password || config.default_password
+  // If password is not given , use default password
+  userData.password = password || (config.default_password as string)
 
-  // Set user role
-  userData.role = 'student';
+  // Set student role
+  userData.role = 'student'
 
-  // Set manually generated id
-  userData.id = "2023100001";
+  // Set manually generated it
+  userData.id = '2023100001'
 
-  // Create user
-  const newUser = await User.create(userData);
+  // Create a user
+  const newUser = await User.create(userData)
 
-
-  // Create a student after created user
+  // Create a student
   if (Object.keys(newUser).length) {
-    // set id, _id as user
-    studentData.id = newUser.id;
-    studentData.user = newUser._id
+    // Set id , _id as user
+    studentData.id = newUser.id
+    studentData.user = newUser._id //reference _id
+
+    const newStudent = await Student.create(studentData)
+    return newStudent
   }
-
-  const result = await User.create(payload)
-  return result
-}
-
-const getAllUsersFromDB = async () => {
-  const result = await User.find()
-  return result
-}
-
-const getSingleUserFromDB = async (id: string) => {
-  const result = await User.aggregate([{ $match: { id } }])
-  return result
-}
-
-const deleteUserFromDB = async (id: string) => {
-  const result = await User.updateOne({ id }, { isDeleted: true })
-  return result
 }
 
 export const UserServices = {
-  createUserIntoDB,
-  getAllUsersFromDB,
-  getSingleUserFromDB,
-  deleteUserFromDB,
+  createStudentIntoDB,
 }

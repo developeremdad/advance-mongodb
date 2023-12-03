@@ -1,90 +1,32 @@
-import { Request, Response } from 'express'
-import { UserServices } from '../user/user.service'
-import { userValidation } from '../user/user.validation'
+import httpStatus from 'http-status'
 
-const createUser = async (req: Request, res: Response) => {
+import { NextFunction, Request, Response } from 'express'
+import sendResponse from '../../utils/sendResponse'
+import { UserServices } from './user.service'
+
+const createStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const {password, user: userData } = req.body
+    const { password, student: studentData } = req.body
 
-    // const zodParsedData = userValidation.userValidationSchema.parse(userData)
+    // const zodParsedData = studentValidationSchema.parse(studentData);
 
-    const result = await UserServices.createUserIntoDB(password, userData)
+    const result = await UserServices.createStudentIntoDB(password, studentData)
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      message: 'User is created successfully',
+      message: 'Student is created successfully',
       data: result,
     })
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message || 'something went wrong',
-      error: err,
-    })
+  } catch (err) {
+    next(err)
   }
 }
 
-const getAllUsers = async (_req: Request, res: Response) => {
-  try {
-    const result = await UserServices.getAllUsersFromDB()
-
-    res.status(200).json({
-      success: true,
-      message: 'Students are retrieved successfully',
-      data: result,
-    })
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message || 'something went wrong',
-      error: err,
-    })
-  }
-}
-
-const getSingleUser = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.params
-
-    const result = await UserServices.getSingleUserFromDB(userId)
-
-    res.status(200).json({
-      success: true,
-      message: 'User is retrieved successfully',
-      data: result,
-    })
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message || 'something went wrong',
-      error: err,
-    })
-  }
-}
-
-const deleteUser = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.params
-
-    const result = await UserServices.deleteUserFromDB(userId)
-
-    res.status(200).json({
-      success: true,
-      message: 'Student is deleted successfully',
-      data: result,
-    })
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message || 'something went wrong',
-      error: err,
-    })
-  }
-}
-
-export const StudentControllers = {
-  createUser,
-  getAllUsers,
-  getSingleUser,
-  deleteUser,
+export const UserControllers = {
+  createStudent,
 }

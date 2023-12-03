@@ -2,7 +2,7 @@ import { Model, Types } from 'mongoose'
 
 export type TUserName = {
   firstName: string
-  middleName?: string
+  middleName: string
   lastName: string
 }
 
@@ -38,13 +38,13 @@ export type TStudent = {
   guardian: TGuardian
   localGuardian: TLocalGuardian
   profileImg?: string
-  isActive: 'active' | 'blocked'
   isDeleted: boolean
 }
 
 //for creating static
 
 export interface StudentModel extends Model<TStudent> {
+  // eslint-disable-next-line no-unused-vars
   isUserExists(id: string): Promise<TStudent | null>
 }
 
